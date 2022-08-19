@@ -13,10 +13,19 @@ import config  #config for bot?
 
 
 bot=telebot.TeleBot(input("Введите TOKEN бота для запуска: "))
+
+@bot.message_handler(commands=["start"])
+def start(message, res=False):
+    print(message.from_user.language_code)
+    bot.send_message(message.chat.id, "Приветствую \U0001F64B\n\n*Что умеет бот* \n\nПревращать видео в _подкасты_ или _музыку_\n\n"
+                    + "Пришли ссылку с [Youtube](https://www.youtube.com/) и получи обратно аудиофайл котрый можно слушать где удобно", 
+                    parse_mode='Markdown',
+                    disable_web_page_preview=True)
+
 @bot.message_handler(content_types=['text'])
 def get_text_message(message):
     # given message from user and load content
-    if message.text.lower() in ['/start', 'привет','hi', 'hello']:
+    if message.text.lower() in ['привет','hi', 'hello']:
         bot.delete_message(message.chat.id, message.message_id)
         bot.send_message(message.chat.id, "Приветствую \U0001F64B\n\n*Что умеет бот* \n\nПревращать видео в _подкасты_ или _музыку_\n\n"
                         + "Пришли ссылку с [Youtube](https://www.youtube.com/) и получи обратно аудиофайл котрый можно слушать где удобно", 
@@ -40,6 +49,7 @@ def get_text_message(message):
 
     else:
         bot.send_message(message.chat.id, "Моя твоя не понимать \U0001F616")
+
 
 def get_audio_file(link):
     # convert video in audio
