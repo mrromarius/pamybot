@@ -1,6 +1,6 @@
 # 
 # TODO: 
-# - Сделать ассинхронность боту
+# [x] Сделать ассинхронность боту
 # - Вынести из бота русскоязыную общалку в отдельный ресурсный файл
 # - Поработать над форматом сообщений, добавить красивостей
 # - Сделать настройки, хранить в системе
@@ -17,9 +17,14 @@ from pytube import YouTube
 
 import config  #config for bot?
 
+#error ssl.sertificate on Macos
 ssl._create_default_https_context = ssl._create_stdlib_context
 bot=Bot(token=os.getenv('TOKEN'))
 dp = Dispatcher(bot)
+
+@dp.message_handler()
+async def command_echo(message : types.Message):
+    await message.answer(message.text)
 
 @dp.message_handler(commands=['start', 'help'])
 async def command_start(message : types.Message):
@@ -30,14 +35,7 @@ async def command_start(message : types.Message):
 @dp.message_handler()
 async def get_text_message(message: types.Message):
     # given message from user and load content
-    if message.text.lower() in ['привет','hi', 'hello']:
-        await bot.delete_message(message.chat.id, message.message_id)
-        await bot.send_message(message.chat.id, "Приветствую \U0001F64B\n\nЧто умеет бот \n\nПревращать видео в подкасты или музыку\n\n"
-                        + "Пришли ссылку с [Youtube](https://www.youtube.com/) и получи обратно аудиофайл который можно слушать где удобно", 
-                        parse_mode='Markdown',
-                        disable_web_page_preview=True)
-
-    elif message.text.find("https://") != -1:
+    if message.text.find("https://") != -1:
         link = message.text
         await bot.delete_message(message.chat.id, message.message_id)
         message_bot = await bot.send_message(message.chat.id, "Ссылка получена! Приступаю к работе! \U0001F916")
