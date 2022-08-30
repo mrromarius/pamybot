@@ -32,9 +32,9 @@ class TestMessagesBot(unittest.TestCase):
         # text_reply = '"Приветствую \U0001F64B\n\n*Что умеет бот* \n\nПревращать видео в _подкасты_ или _музыку_\n\n" \
         #             + "Пришли ссылку с [Youtube](https://www.youtube.com/) и получи обратно аудиофайл который можно слушать где удобно"'
         text_reply = 'ghbdtn'
-        message_mock = await AsyncMock(text=text_reply)
+        message_mock = AsyncMock(text=text_reply)
         await command_echo(message=message_mock)
-        message_mock.send_message.assert_called_with(text_reply)
+        message_mock.answer.assert_called_with(text_reply)
 
 
 if __name__ == '__main__':
