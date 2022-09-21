@@ -21,14 +21,12 @@ CHAT = {
 
 MESSAGE = {
     "message_id": 11223,
-    "from": USER,
     "chat": CHAT,
     "date": 1508709711,
     "text": "Hi, world!",
 }
 MESSAGE_START = {
     "message_id": 11223,
-    "from": USER,
     "chat": CHAT,
     "date": 1508709711,
     "text": "Приветствую \U0001F64B\n\n*Что умеет бот* \n\nПревращать видео в _подкасты_ или _музыку_\n\n" \

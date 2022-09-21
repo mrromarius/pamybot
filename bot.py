@@ -4,6 +4,7 @@
 # - Вынести из бота русскоязыную общалку в отдельный ресурсный файл
 # - Поработать над форматом сообщений, добавить красивостей
 # - Сделать настройки, хранить в системе
+from email.message import Message
 from importlib.resources import path
 from pathlib import Path
 import os
@@ -23,7 +24,7 @@ bot=Bot(token=os.getenv('TOKEN'))
 dp = Dispatcher(bot)
 
 @dp.message_handler()
-async def command_echo(message : types.Message):
+async def command_echo(message : types.Message) -> Message:
     await message.answer(message.text)
 
 @dp.message_handler(commands=['start', 'help'])

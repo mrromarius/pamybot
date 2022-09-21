@@ -1,20 +1,23 @@
+
+from email import message
 from unittest import result
+from unittest.mock import AsyncMock
 import pytest
 from aiogram import Bot, types
+import pytest_asyncio
 
-from bot import command_start
+from bot import command_start, command_echo
 from .types.dataset import MESSAGE_START, MESSAGE
-from . import FakeTelegram
 
+
+# @pytest.skip
 @pytest.mark.asyncio
-async def test_reply_commands_start_and_help(bot : Bot):
+async def test_reply_commands_start_and_help():
     '''test: testing commands start and help when sending the bot'''
     text_reply = "Приветствую \U0001F64B\n\n*Что умеет бот* \n\nПревращать видео в _подкасты_ или _музыку_\n\n" \
                 + "Пришли ссылку с [Youtube](https://www.youtube.com/) и получи обратно аудиофайл который можно слушать где удобно"
 
-    msg = types.Message(**MESSAGE_START)
-    msg.text = text_reply
+    message_mock = AsyncMock(MESSAGE_START)
+    await command_start(message=message_mock)
+    message_mock.answer.assert_called_with(text_reply)
 
-    async with FakeTelegram(message_data=MESSAGE_START):
-        result = await bot.send_message(chat_id = msg.chat.id, text = msg.text)
-        assert result==msg
