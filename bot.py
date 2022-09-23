@@ -29,7 +29,7 @@ async def command_echo(message : types.Message) -> Message:
 
 @dp.message_handler(commands=['start', 'help'])
 async def command_start(message : types.Message):
-    await bot.send_message(message.from_user.id, "Приветствую \U0001F64B\n\n*Что умеет бот* \n\nПревращать видео в _подкасты_ или _музыку_\n\n"
+    await bot.send_message(message.chat.id, "Приветствую \U0001F64B\n\n*Что умеет бот* \n\nПревращать видео в _подкасты_ или _музыку_\n\n"
                     + "Пришли ссылку с [Youtube](https://www.youtube.com/) и получи обратно аудиофайл который можно слушать где удобно", 
                     parse_mode='Markdown',
                     disable_web_page_preview=True)

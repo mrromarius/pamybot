@@ -1,10 +1,9 @@
-
-from email import message
-from unittest import result
 from unittest.mock import AsyncMock
 import pytest
 from aiogram import Bot, types
 import pytest_asyncio
+
+import logging
 
 from bot import command_start, command_echo
 from .types.dataset import MESSAGE_START, MESSAGE
@@ -18,6 +17,8 @@ async def test_reply_commands_start_and_help():
                 + "Пришли ссылку с [Youtube](https://www.youtube.com/) и получи обратно аудиофайл который можно слушать где удобно"
 
     message_mock = AsyncMock(MESSAGE_START)
+    logging.warning("Тестинфо")
+    logging.warning(message_mock["message_id"])
     await command_start(message=message_mock)
     message_mock.answer.assert_called_with(text_reply)
 
